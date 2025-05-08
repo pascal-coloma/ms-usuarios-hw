@@ -9,9 +9,12 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 
-    @Query(value = "SELECT * FROM usuario WHERE numrun =:numrun", nativeQuery = true)
+    @Query(value = "SELECT * FROM usuario WHERE run =:run", nativeQuery = true)
     Usuario findByRun(String run);
 
+    
+
+    
 
 
 }

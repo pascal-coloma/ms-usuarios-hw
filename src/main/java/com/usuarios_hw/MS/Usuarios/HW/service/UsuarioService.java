@@ -20,9 +20,24 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
+    public Usuario findById(Long id){
+        return usuarioRepository.findById(id).get();
+    }
+
     public Usuario findByRun(String run){
         return usuarioRepository.findByRun(run);
     }
 
+    public List<Usuario> saveLista(List<Usuario> listUsuarios){
+        return usuarioRepository.saveAll(listUsuarios);
+    }
+
+    public Usuario save(Usuario usuario){
+        return usuarioRepository.save(usuario);
+    }
+
+    public void delete(Long id){
+        usuarioRepository.deleteById(id);
+    }
     
 }

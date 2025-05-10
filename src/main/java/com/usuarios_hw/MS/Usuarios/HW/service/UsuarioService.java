@@ -36,6 +36,19 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
+    public Usuario registrarUsuario(Usuario usuario){
+        String telefono = usuario.getNum_telefono();
+
+        if(!telefono.matches("^\\d{8}$")){
+            throw new IllegalArgumentException("Número debe tener 8 dígitos");
+        }
+
+        telefono = "+569" + telefono;
+        usuario.setNum_telefono(telefono);
+
+        return usuarioRepository.save(usuario);
+    }
+
     public void delete(Long id){
         usuarioRepository.deleteById(id);
     }

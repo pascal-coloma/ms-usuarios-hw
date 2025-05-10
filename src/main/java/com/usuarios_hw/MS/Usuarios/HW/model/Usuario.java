@@ -46,11 +46,14 @@ public class Usuario {
     @Column(nullable = false)
     private String apmaterno;
 
+    @Column(nullable = false)
+    private String correo;
+
+    @Column(name = "num_telefono" ,nullable = false)
+    private String num_telefono;
+
     @Column(nullable = true)
     @JsonFormat(pattern="dd-MM-yyyy")
-    private Date fechaNacto;
-
-
-
+    private Date fecha_nacto;
 
 }

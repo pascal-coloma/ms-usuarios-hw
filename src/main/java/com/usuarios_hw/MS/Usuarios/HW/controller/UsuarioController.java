@@ -3,28 +3,37 @@ package com.usuarios_hw.MS.Usuarios.HW.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.*;
+import com.usuarios_hw.MS.Usuarios.HW.model.Usuario;
+import com.usuarios_hw.MS.Usuarios.HW.service.PedidoClient;
+import com.usuarios_hw.MS.Usuarios.HW.dto.PedidoDto;
+import com.usuarios_hw.MS.Usuarios.HW.service.UsuarioService;
+import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import com.usuarios_hw.MS.Usuarios.HW.model.Usuario;
-import com.usuarios_hw.MS.Usuarios.HW.service.UsuarioService;
-import java.util.List;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
-
 
 
 @RestController
-@RequestMapping("/api/v1/usuarios")
+@RequestMapping("/hoppyware/v1/usuarios")
 public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
+
+    private final PedidoClient pedidoClient;
+
+    public UsuarioController(PedidoClient pedidoClient){
+        this.pedidoClient = pedidoClient;
+    }
+
+    @GetMapping("/pedidos/buscarId/{id}")
+    public ResponseEntity<PedidoDto> getPedido(@PathVariable Long id){
+        PedidoDto pedido = pedidoClient.obtenerPedidoPorId(id);
+        return ResponseEntity.ok(pedido);
+    }
+    
 
     @GetMapping()
     public ResponseEntity<List<Usuario>> listarUsuarios(){
@@ -35,13 +44,21 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarios);
     }
     
-    @PostMapping("/guardar")
+    @PostMapping("/guardarLista")
     public ResponseEntity<List<Usuario>> guardar(@RequestBody List<Usuario> listaUsuarios){
         List<Usuario> nuevaLista = usuarioService.saveLista(listaUsuarios);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaLista);
     }
+
+    @PostMapping("/guardar")
+    public ResponseEntity<Usuario> guardarUsr(@RequestBody Usuario usuario){
+        Usuario newUsr = usuarioService.registrarUsuario(usuario);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newUsr);
     
-    @PutMapping("actualizar/{id}")
+    }
+    
+    
+    @PutMapping("/actualizar/{id}")
     public ResponseEntity<Usuario> actualizar(@PathVariable Long id, @RequestBody Usuario usuario){
         try {
             Usuario usr = usuarioService.findById(id);
@@ -52,7 +69,9 @@ public class UsuarioController {
             usr.setSnombre(usuario.getSnombre());
             usr.setAppaterno(usuario.getAppaterno());
             usr.setApmaterno(usuario.getApmaterno());
-            usr.setFechaNacto(usuario.getFechaNacto());
+            usr.setFecha_nacto(usuario.getFecha_nacto());
+            usr.setCorreo(usuario.getCorreo());
+            usr.setNum_telefono(usuario.getNum_telefono());
             
             usuarioService.save(usr);
             return ResponseEntity.ok(usuario);
@@ -82,6 +101,8 @@ public class UsuarioController {
         }
 
     }
+
+
     
     
     

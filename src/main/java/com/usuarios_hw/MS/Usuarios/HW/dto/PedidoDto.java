@@ -17,4 +17,14 @@ public class PedidoDto {
         @JsonFormat(pattern = "dd-MM-yyyy")
         private Date fecha_pedido;
         private Integer estado;
+        private Long id_usuario;
+        public String getEstado(){
+                if (estado == null) return "Desconocido";
+                return switch (estado) {
+                        case 0 -> "Recibido";
+                        case 1 ->"En proceso";
+                        case 2 ->"Despachado";
+                        default -> "Otro";              
+                };
+        }
 }

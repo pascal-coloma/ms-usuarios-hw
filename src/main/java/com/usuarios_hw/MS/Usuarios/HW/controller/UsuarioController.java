@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.usuarios_hw.MS.Usuarios.HW.model.Usuario;
-import com.usuarios_hw.MS.Usuarios.HW.service.PedidoClient;
+
 import com.usuarios_hw.MS.Usuarios.HW.dto.PedidoDto;
+import com.usuarios_hw.MS.Usuarios.HW.model.Usuario;
 import com.usuarios_hw.MS.Usuarios.HW.service.UsuarioService;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,24 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("/hoppyware/v1/usuarios")
+@RequestMapping("/hoppyware/v1/usuario")
 public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
-
-    private final PedidoClient pedidoClient;
-
-    public UsuarioController(PedidoClient pedidoClient){
-        this.pedidoClient = pedidoClient;
-    }
-
-    @GetMapping("/pedidos/buscarId/{id}")
-    public ResponseEntity<PedidoDto> getPedido(@PathVariable Long id){
-        PedidoDto pedido = pedidoClient.obtenerPedidoPorId(id);
-        return ResponseEntity.ok(pedido);
-    }
-    
 
     @GetMapping()
     public ResponseEntity<List<Usuario>> listarUsuarios(){
@@ -44,6 +31,18 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarios);
     }
     
+    @GetMapping("/{id}")
+    public ResponseEntity<Usuario> getMethodName(@PathVariable Long id) {
+        try {
+            Usuario usuario = usuarioService.findById(id);
+            return ResponseEntity.ok(usuario);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
+    
+
     @PostMapping("/guardarLista")
     public ResponseEntity<List<Usuario>> guardar(@RequestBody List<Usuario> listaUsuarios){
         List<Usuario> nuevaLista = usuarioService.saveLista(listaUsuarios);
@@ -56,7 +55,6 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(newUsr);
     
     }
-    
     
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Usuario> actualizar(@PathVariable Long id, @RequestBody Usuario usuario){
@@ -101,6 +99,28 @@ public class UsuarioController {
         }
 
     }
+
+    @GetMapping("/pedidoPorId")
+    public ResponseEntity<PedidoDto> getPedidoPorId(@RequestParam Long id_pedido) {
+        try {
+            PedidoDto pedido = usuarioService.getPedidoPorId(id_pedido);
+            return ResponseEntity.ok(pedido);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/pedidoPorUsr")
+    public ResponseEntity<List<PedidoDto>> getPedidoPorUsr(@RequestParam Long id){
+        try {
+            List<PedidoDto> pedidosPorUsr = usuarioService.getPedidoPorUsr(id);
+            return ResponseEntity.ok(pedidosPorUsr);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
+    
 
 
     

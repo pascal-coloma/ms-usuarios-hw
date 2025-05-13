@@ -3,6 +3,7 @@ package com.usuarios_hw.MS.Usuarios.HW.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
+import com.usuarios_hw.MS.Usuarios.HW.dto.*;
 
 import com.usuarios_hw.MS.Usuarios.HW.repository.UsuarioRepository;
 import com.usuarios_hw.MS.Usuarios.HW.model.Usuario;
@@ -15,6 +16,20 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    private final PedidoClient pedidoClient;
+
+    public UsuarioService(PedidoClient pedidoClient){
+        this.pedidoClient = pedidoClient;
+    }
+
+    public PedidoDto getPedidoPorId(Long id){
+        return pedidoClient.getPedidoPorId(id);
+    }
+
+    public List<PedidoDto> getPedidoPorUsr(Long id){
+        return pedidoClient.getPedidoPorUsr(id);
+    }
 
     public List<Usuario> findAll(){
         return usuarioRepository.findAll();

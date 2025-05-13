@@ -1,20 +1,24 @@
 package com.usuarios_hw.MS.Usuarios.HW.service;
 
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import com.usuarios_hw.MS.Usuarios.HW.dto.PedidoDto;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
-@Service
-public class PedidoClient {
+import java.util.List;
 
-    private final RestTemplate restTemplate;
+import com.usuarios_hw.MS.Usuarios.HW.dto.*;
 
-    public PedidoClient(RestTemplate restTemplate){
-        this.restTemplate = restTemplate;
-    }
 
-    public PedidoDto obtenerPedidoPorId(Long id){
-        String url = "http://localhost:8080/hoppyware/v1/pedidos/buscarId/" + id;
-        return restTemplate.getForObject(url, PedidoDto.class);
-    }
+@FeignClient(name = "pedido-service", url= "http://localhost:8080/hoppyware/v1/pedido")
+public interface PedidoClient {
+
+    @GetMapping("/buscarId/{id}")
+    PedidoDto getPedidoPorId(@PathVariable("id_pedido") Long id);
+
+    @GetMapping("/porUsuario")
+    List<PedidoDto> getPedidoPorUsr(@RequestParam("id_usr") Long id);
+
+
+    
 }

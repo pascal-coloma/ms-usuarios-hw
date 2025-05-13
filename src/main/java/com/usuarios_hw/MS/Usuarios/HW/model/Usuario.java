@@ -3,19 +3,16 @@ package com.usuarios_hw.MS.Usuarios.HW.model;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.List;
+
 
 @Entity
 @Table(name = "usuario", schema = "USUARIOSMS")
@@ -47,7 +44,7 @@ public class Usuario {
     @Column(nullable = false)
     private String apmaterno;
 
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String correo;
 
     @Column(name = "num_telefono" ,nullable = false)

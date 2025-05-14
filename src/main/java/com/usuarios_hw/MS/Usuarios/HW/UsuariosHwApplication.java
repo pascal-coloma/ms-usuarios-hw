@@ -8,10 +8,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableFeignClients
-public class MsUsuariosHwApplication {
+public class UsuariosHwApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MsUsuariosHwApplication.class, args);
+		SpringApplication.run(UsuariosHwApplication.class, args);
 	}
 
 	

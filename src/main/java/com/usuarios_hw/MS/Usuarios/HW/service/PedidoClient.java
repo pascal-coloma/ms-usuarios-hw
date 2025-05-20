@@ -3,7 +3,7 @@ package com.usuarios_hw.MS.Usuarios.HW.service;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public interface PedidoClient {
     PedidoDto getPedidoPorId(@PathVariable("id") Long id);
 
     @GetMapping("/{id}/pedidos-cliente")
-    List<PedidoDto> getPedidoPorUsr(@RequestParam("id_usr") Long id_usr);
+    List<PedidoDto> getPedidoPorUsr(@PathVariable("id") Long id);
 
 
     

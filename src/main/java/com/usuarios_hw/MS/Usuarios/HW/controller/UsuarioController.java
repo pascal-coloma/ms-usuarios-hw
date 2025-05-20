@@ -10,7 +10,6 @@ import com.usuarios_hw.MS.Usuarios.HW.model.Usuario;
 import com.usuarios_hw.MS.Usuarios.HW.service.UsuarioService;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -85,8 +84,8 @@ public class UsuarioController {
     }
 
     // Busqueda de usuarios por RUN, devuelve solo un resultado ya que no deben existir registros de RUT repetidos
-    @GetMapping("/buscarRun")
-    public ResponseEntity<Usuario> buscarRun(@RequestParam String run){
+    @GetMapping("/{run}/usuario-run")
+    public ResponseEntity<Usuario> buscarRun(@PathVariable String run){
         try{
             Usuario usuario = usuarioService.findByRun(run);
             return ResponseEntity.ok(usuario);
@@ -109,7 +108,7 @@ public class UsuarioController {
     }
 
     // Busqueda de pedidos por su ID, esto a traves de la comunicacion con el microservicio de pedidos
-    @GetMapping("/pedidoPorId/{id}")
+    @GetMapping("/{id}/pedido-id")
     public ResponseEntity<PedidoDto> getPedidoPorId(@PathVariable Long id) {
         try {
             PedidoDto pedido = usuarioService.getPedidoPorId(id);
@@ -120,10 +119,10 @@ public class UsuarioController {
     }
 
     // Busqueda de pedidos por id de usuario, comunicacion a traves de Feign Client
-    @GetMapping("/pedidoPorUsr")
-    public ResponseEntity<List<PedidoDto>> getPedidoPorUsr(@RequestParam Long id){
+    @GetMapping("/{id}/pedidos-cliente")
+    public ResponseEntity<List<PedidoDto>> getPedidoPorUsr(@PathVariable Long id_usr){
         try {
-            List<PedidoDto> pedidosPorUsr = usuarioService.getPedidoPorUsr(id);
+            List<PedidoDto> pedidosPorUsr = usuarioService.getPedidoPorUsr(id_usr);
             return ResponseEntity.ok(pedidosPorUsr);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();

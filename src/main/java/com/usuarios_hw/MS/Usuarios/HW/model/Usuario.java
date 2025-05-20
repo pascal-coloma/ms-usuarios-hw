@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,7 +24,8 @@ import lombok.NoArgsConstructor;
 public class Usuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generador_secuencia_id_usr")
+    @SequenceGenerator(name = "generador_secuencia_id_usr", sequenceName = "secuencia_id_usr", allocationSize = 1)
     private Integer id;
 
     @Column(unique = true, length = 13, nullable = false)

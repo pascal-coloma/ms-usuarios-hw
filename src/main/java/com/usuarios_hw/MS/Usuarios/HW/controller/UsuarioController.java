@@ -120,9 +120,9 @@ public class UsuarioController {
 
     // Busqueda de pedidos por id de usuario, comunicacion a traves de Feign Client
     @GetMapping("/{id}/pedidos-cliente")
-    public ResponseEntity<List<PedidoDto>> getPedidoPorUsr(@PathVariable Long id){
+    public ResponseEntity<List<PedidoDto>> getPedidosUsuario(@PathVariable Long id){
         try {
-            List<PedidoDto> pedidosPorUsr = usuarioService.getPedidoPorUsr(id);
+            List<PedidoDto> pedidosPorUsr = usuarioService.getPedidoPorIdUsr(id);
             return ResponseEntity.ok(pedidosPorUsr);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();

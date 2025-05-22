@@ -27,7 +27,7 @@ public class UsuarioService {
         return pedidoClient.getPedidoPorId(id);
     }
 
-    public List<PedidoDto> getPedidoPorUsr(Long id){
+    public List<PedidoDto> getPedidoPorIdUsr(Long id){
         return pedidoClient.getPedidoPorUsr(id);
     }
 

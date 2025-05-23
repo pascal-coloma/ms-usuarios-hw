@@ -35,4 +35,4 @@ build/
 ### LOCAL ###
 env.properties
 
-/src/main/resources/wallet/
+/src/main/resources/wallet

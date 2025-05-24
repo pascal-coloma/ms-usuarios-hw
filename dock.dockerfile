@@ -18,6 +18,10 @@ VOLUME /tmp
 # Copy built jar
 COPY --from=build /app/target/MS-Usuarios-HW-0.0.1-SNAPSHOT.jar app.jar
 
+# Add zip and unzip
+COPY wallet.zip /app/wallet.zip
+RUN apt-get update && apt-get install -y unzip && unzip /app/wallet.zip -d /app/wallet
+
 # Copy wallet folder only
 COPY src/main/resources/wallet /app/wallet
 

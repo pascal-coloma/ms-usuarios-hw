@@ -21,6 +21,7 @@ COPY --from=build /app/target/MS-Usuarios-HW-0.0.1-SNAPSHOT.jar app.jar
 # Copy wallet folder only
 COPY src/main/resources/wallet /app/wallet
 
+COPY /env.properties /app/
 # Expose port and start application
 EXPOSE 8080
 ENTRYPOINT ["java","-jar","app.jar"]

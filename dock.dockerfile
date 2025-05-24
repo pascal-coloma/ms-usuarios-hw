@@ -22,10 +22,6 @@ COPY --from=build /app/target/MS-Usuarios-HW-0.0.1-SNAPSHOT.jar app.jar
 COPY wallet.zip /app/wallet.zip
 RUN apt-get update && apt-get install -y unzip && unzip /app/wallet.zip -d /app/wallet
 
-# Copy wallet folder only
-COPY src/main/resources/wallet /app/wallet
-
-
 # Expose port and start application
 EXPOSE 8080
 ENTRYPOINT ["java","-jar","app.jar"]

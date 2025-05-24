@@ -11,7 +11,7 @@ RUN chmod +x ./mvnw
 RUN ./mvnw clean package -DskipTests
 
 # Stage 2: Runtime
-FROM openjdk:19-jdk
+FROM openjdk:19-jdk-slim
 WORKDIR /app
 VOLUME /tmp
 
@@ -20,7 +20,7 @@ COPY --from=build /app/target/MS-Usuarios-HW-0.0.1-SNAPSHOT.jar app.jar
 
 # Add zip and unzip
 COPY wallet.zip /app/wallet.zip
-RUN apt-get update && apt-get install -y unzip && unzip /app/wallet.zip -d /app/wallet
+RUN apt-get update && apt-get install -y unzip && unzip /app/wallet.zip -d /app/wallet && rm /app/wallet.zip
 
 # Expose port and start application
 EXPOSE 8080
